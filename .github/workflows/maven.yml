@@ -49,5 +49,4 @@ jobs:
     - uses: mr-smithers-excellent/docker-build-push@v5
       with:
         image: nabukatnazar/api-test-demo
-        registry: docker.io
         tags: latest
