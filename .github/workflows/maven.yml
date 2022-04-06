@@ -41,8 +41,8 @@ jobs:
     -
       name: Check Credentials
       env:
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        DOCKER_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
       run: |
         echo ${#DOCKER_USERNAME}
         echo ${#DOCKER_PASSWORD}
