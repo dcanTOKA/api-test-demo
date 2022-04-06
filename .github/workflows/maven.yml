@@ -22,25 +22,17 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-      
   docker:
-      runs-on: ubuntu-latest
-      steps:
-        -
-          name: Set up QEMU
-          uses: docker/setup-qemu-action@v1
-        -
-          name: Set up Docker Buildx
-          uses: docker/setup-buildx-action@v1
-        -
-          name: Login to DockerHub
-          uses: docker/login-action@v1 
-          with:
-            username: ${{ secrets.DOCKERHUB_USERNAME }}
-            password: ${{ secrets.DOCKERHUB_TOKEN }}
-        -
-          name: Build and push
-          uses: docker/build-push-action@v2
-          with:
-            push: true
-            tags: nabukatnazar/api-test-demo:latest
+  
+    runs-on: ubuntu-latest
+  
+    steps:
+    - uses: actions/checkout@v2
+      name: Check out code
+      
+    - uses: mr-smithers-excellent/docker-build-push@v5
+      with:
+        image: nabukatnazar/api-test-demo
+        registry: docker.io
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
