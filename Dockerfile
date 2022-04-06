@@ -4,21 +4,7 @@
 # 	docker run  --rm -it -v ${PWD}/reports:/gauge/reports gauge-java
 
 # This image uses the official openjdk base image.
-
-FROM openjdk
-
-# Install gauge
-RUN microdnf install -y unzip \
-    && curl -Ssl https://downloads.gauge.org/stable | sh
-
-# Set working directory
-WORKDIR /gauge
- 
-# Copy the local source folder
-COPY . .
-
-# Install gauge plugins
-RUN gauge install \
-    && gauge install screenshot
-
-CMD ["gauge", "run",  "specs"]
+FROM openjdk:8
+ADD target/api-test-demo.jar api-test-demo.jar
+ENTRYPOINT ["java", "-jar","api-test-demo.jar"]
+EXPOSE 8080

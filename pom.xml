@@ -146,6 +146,7 @@
                 <version>${gauge.plugin.version}</version>
             </plugin>
         </plugins>
+        <finalName>api-test-demo</finalName>
     </build>
 
 </project>
