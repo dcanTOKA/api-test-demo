@@ -154,4 +154,15 @@ public class BaseSteps extends BaseTest{
             return diffInMillies;
         }
     }
+
+    public String daysToWeeks(long days){
+        long week = 0;
+        long day = 0;
+        if(days >= 7){
+            week = days / 7;
+            day = days % 7;
+        }
+        return (week + "w " + day + "d");
+    }
+
 }
