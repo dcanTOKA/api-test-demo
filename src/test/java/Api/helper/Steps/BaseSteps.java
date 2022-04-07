@@ -15,6 +15,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class BaseSteps extends BaseTest{
@@ -134,5 +137,21 @@ public class BaseSteps extends BaseTest{
         Assert.assertEquals(user.get("email"), response.jsonPath().get("email"));
         Assert.assertEquals(user.get("phone").toString(), response.jsonPath().get("phone").toString());
         Assert.assertEquals(user.get("userStatus").toString(), response.jsonPath().get("userStatus").toString());
+    }
+
+    public long timeBetweenTwoDates(String first , String second , String typeSelector) throws java.text.ParseException {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        Date firstDate = sdf.parse(first);
+        Date secondDate = sdf.parse(second);
+        long diffInMillies;
+
+        diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
+
+        if("days".equals(typeSelector)){
+            return TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+        }else{
+            return diffInMillies;
+        }
     }
 }
