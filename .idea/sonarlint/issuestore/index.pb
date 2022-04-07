@@ -11,7 +11,5 @@ U
 %src/main/java/Api/LoggerInstance.java,8/d/8d588be217846473e3c15b69fd669dbada4d1153
 a
 1src/test/java/Api/helper/Base/BaseTestHelper.java,a/f/af2cbfcdf4ae9d5d421faef568e457f77f0f8254
-7
-pom.xml,4/4/442292b8a7efeabbe4cc176709b833b1792140ec
 i
 9src/test/java/Api/helper/Constants/RestRequestFields.java,4/0/40c555026e8c8198f901edb7b7b0c3cffbc8257f
