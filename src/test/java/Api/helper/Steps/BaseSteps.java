@@ -189,4 +189,35 @@ public class BaseSteps extends BaseTest{
         return Pair.of(TimeUnit.MILLISECONDS.convert(hours, TimeUnit.HOURS), tolarance);
     }
 
+    public Pair<Long,Long> convertToMilisec(String metricValue){
+        Assert.assertNotNull(metricValue);
+
+        Long tolarance = 0L;
+
+        List<String> args = Arrays.asList(metricValue.split(" "));
+        int elapsedTime = 0;
+        for (String arg:args) {
+            if(arg.contains("w")){
+                elapsedTime = elapsedTime + (604800 *Integer.parseInt(arg.substring(0,arg.indexOf('w'))));
+            }
+            if(arg.contains("d")){
+                elapsedTime = elapsedTime + (86400 *Integer.parseInt(arg.substring(0,arg.indexOf('d'))));
+                tolarance = 86340000L;
+            }
+            if(arg.contains("h")){
+                elapsedTime = elapsedTime + (3600 * Integer.parseInt(arg.substring(0,arg.indexOf('h'))));
+                tolarance = 3599000L;
+            }
+            if(arg.contains("min")){
+                elapsedTime = elapsedTime + ( 60 * Integer.parseInt(arg.substring(0,arg.indexOf('m'))));
+                tolarance = 59999L;
+            }
+            if(arg.contains("sec")){
+                elapsedTime = elapsedTime + (Integer.parseInt(arg.substring(0,arg.indexOf('s'))));
+                tolarance = 999L;
+            }
+        }
+        return Pair.of(TimeUnit.MILLISECONDS.convert(elapsedTime, TimeUnit.SECONDS), tolarance);
+    }
+
 }
