@@ -3,6 +3,7 @@ package Api.helper.Steps;
 import Api.helper.Base.BaseTest;
 import Api.helper.Constants.Elements;
 import io.restassured.response.Response;
+import org.apache.commons.lang3.tuple.Pair;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -15,9 +16,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class BaseSteps extends BaseTest{
@@ -163,6 +164,60 @@ public class BaseSteps extends BaseTest{
             day = days % 7;
         }
         return (week + "w " + day + "d");
+    }
+
+    public Pair<Long,Long> weekDayHourToMilisec(String metricValue){
+        Assert.assertNotNull(metricValue);
+
+        Long tolarance = 0L;
+
+        List<String> args = Arrays.asList(metricValue.split(" "));
+        int hours = 0;
+        for (String arg:args) {
+            if(arg.contains("w")){
+                hours = hours + (168*Integer.parseInt(arg.substring(0,arg.indexOf('w'))));
+            }
+            if(arg.contains("d")){
+                hours = hours + (24*Integer.parseInt(arg.substring(0,arg.indexOf('d'))));
+                tolarance = 86340000L;
+            }
+            if(arg.contains("h")){
+                hours = hours + (Integer.parseInt(arg.substring(0,arg.indexOf('h'))));
+                tolarance = 3599000L;
+            }
+        }
+        return Pair.of(TimeUnit.MILLISECONDS.convert(hours, TimeUnit.HOURS), tolarance);
+    }
+
+    public Pair<Long,Long> convertToMilisec(String metricValue){
+        Assert.assertNotNull(metricValue);
+
+        Long tolarance = 0L;
+
+        List<String> args = Arrays.asList(metricValue.split(" "));
+        int elapsedTime = 0;
+        for (String arg:args) {
+            if(arg.contains("w")){
+                elapsedTime = elapsedTime + (604800 *Integer.parseInt(arg.substring(0,arg.indexOf('w'))));
+            }
+            if(arg.contains("d")){
+                elapsedTime = elapsedTime + (86400 *Integer.parseInt(arg.substring(0,arg.indexOf('d'))));
+                tolarance = 86340000L;
+            }
+            if(arg.contains("h")){
+                elapsedTime = elapsedTime + (3600 * Integer.parseInt(arg.substring(0,arg.indexOf('h'))));
+                tolarance = 3599000L;
+            }
+            if(arg.contains("min")){
+                elapsedTime = elapsedTime + ( 60 * Integer.parseInt(arg.substring(0,arg.indexOf('m'))));
+                tolarance = 59999L;
+            }
+            if(arg.contains("sec")){
+                elapsedTime = elapsedTime + (Integer.parseInt(arg.substring(0,arg.indexOf('s'))));
+                tolarance = 999L;
+            }
+        }
+        return Pair.of(TimeUnit.MILLISECONDS.convert(elapsedTime, TimeUnit.SECONDS), tolarance);
     }
 
 }
