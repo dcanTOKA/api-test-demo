@@ -10,7 +10,9 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -218,6 +220,13 @@ public class BaseSteps extends BaseTest{
             }
         }
         return Pair.of(TimeUnit.MILLISECONDS.convert(elapsedTime, TimeUnit.SECONDS), tolarance);
+    }
+
+    public void scrollListDynamic(){
+        for (int i = 0; i < 7 ; i++) {
+            Actions action = new Actions(driver);
+            action.sendKeys(Keys.ARROW_DOWN).perform();
+        }
     }
 
 }
