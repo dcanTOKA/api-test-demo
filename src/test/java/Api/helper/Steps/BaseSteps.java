@@ -243,4 +243,10 @@ public class BaseSteps extends BaseTest{
         return bilgiler;
     }
 
+    public File[] getListOfFile(String fileName, String sourceDir) {
+        Assert.assertNotNull(fileName);
+        File folder = new File(sourceDir);
+        return folder.listFiles();
+    }
+
 }
