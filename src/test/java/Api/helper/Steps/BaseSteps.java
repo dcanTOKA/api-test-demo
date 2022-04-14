@@ -16,9 +16,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -227,6 +225,22 @@ public class BaseSteps extends BaseTest{
             Actions action = new Actions(driver);
             action.sendKeys(Keys.ARROW_DOWN).perform();
         }
+    }
+
+    public List<String> csvReader(String file, String seperator) throws IOException {
+
+        String line;
+        List<String> bilgiler = new ArrayList<>();
+        try (BufferedReader csvReader = new BufferedReader(new FileReader(file))) {
+
+            while ((line = csvReader.readLine()) != null) {
+                bilgiler = (Arrays.asList(line.split(seperator)));
+
+            }
+        } catch (FileNotFoundException e) {
+            log("csv Reader error : " + e.getMessage());
+        }
+        return bilgiler;
     }
 
 }
