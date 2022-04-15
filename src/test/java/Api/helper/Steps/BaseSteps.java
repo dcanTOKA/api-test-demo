@@ -249,4 +249,20 @@ public class BaseSteps extends BaseTest{
         return folder.listFiles();
     }
 
+    public String getText(By by) {
+        WebElement element ;
+        String textToBeGot = null;
+        boolean status = false;
+        if (!status) {
+            try {
+                element = driver.findElement(by);
+                textToBeGot = element.getText();
+                status = true;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return textToBeGot;
+    }
+
 }
