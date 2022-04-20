@@ -265,4 +265,9 @@ public class BaseSteps extends BaseTest{
         return textToBeGot;
     }
 
+    public String getDate() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM HH:mm:ss");
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
 }
